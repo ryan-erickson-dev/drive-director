@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import { React, useState } from "react";
+import "./App.css";
+import Tabs from "./Tabs";
+import Map from "./Map";
+import Profile from "./Profile";
+import List from "./List";
 
-function App() {
+export default function App() {
+  const [activeTab, setActiveTab] = useState(<Map />);
+
+  function changeTab(e) {
+    console.log(e);
+
+    switch(e.target.id) {
+      case "map-tab":
+        setActiveTab(<Map />);
+        break;
+      case "list-tab":
+        setActiveTab(<List />);
+        break;
+      default:
+        setActiveTab(<Profile />);
+    }
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {activeTab}
+      <Tabs setActiveTab={changeTab} />
+    </>
   );
 }
-
-export default App;
