@@ -8,13 +8,9 @@ def usage_error():
     print(f"ERROR: Usage: python {os.path.basename(__file__)} [api_key: str]", file=sys.stderr)
     sys.exit(1)
 
-@app.route('/data')
-def index():
-    return "This is the root index returned."
+api_key = ""
 
 if __name__ == "__main__":
-
-    api_key= ""
     match (len(sys.argv)):
         case 1:
             app.run(debug=True)
@@ -24,6 +20,13 @@ if __name__ == "__main__":
             app.run(debug=True)
         case default:
             usage_error()
+
+@app.route('/get_route', methods=["POST"])
+def get_route():
+    data = request.json
+    current_address = data["current_address"]
+    destination = data["destination"]
+    api_key = 
 
 """
 Queue data Structure:
@@ -68,7 +71,7 @@ DRIVERS = [{}]
 
 
 @app.route("/add_rider", methods=["POST"])
-def add_rider(name, current_address, destination, passenger_count):
+def add_rider():
     data = request.json
     rider = {
         "rider_name": data["rider_name"],
