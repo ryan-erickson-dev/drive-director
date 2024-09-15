@@ -1,3 +1,6 @@
+# NPM package-lock ignore (package-lock is generated from package.json)
+package-lock.json
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

@@ -4,29 +4,22 @@ import json
 
 app = Flask(__name__)
 
+
 def usage_error():
-    print(f"ERROR: Usage: python {os.path.basename(__file__)} [api_key: str]", file=sys.stderr)
+    print(
+        f"ERROR: Usage: python {os.path.basename(__file__)} [api_key: str]",
+        file=sys.stderr,
+    )
     sys.exit(1)
 
-api_key = ""
 
-if __name__ == "__main__":
-    match (len(sys.argv)):
-        case 1:
-            app.run(debug=True)
-        case 2:
-            api_key = sys.argv[1]
-            print(f"API Key accepted: {sys.argv[1]}")
-            app.run(debug=True)
-        case default:
-            usage_error()
-
-@app.route('/get_route', methods=["POST"])
+@app.route("/get_route", methods=["POST"])
 def get_route():
     data = request.json
     current_address = data["current_address"]
     destination = data["destination"]
-    api_key = 
+    api_key = ""
+
 
 """
 Queue data Structure:
@@ -88,6 +81,7 @@ def print_riders():
     for rider in QUEUE:
         print(json.dumps(rider, indent=4))
 
+
 @app.route("/remove_rider", methods=["POST"])
 def remove_rider(name):
     for rider in QUEUE:
@@ -95,9 +89,11 @@ def remove_rider(name):
             QUEUE.remove(rider)
             return rider
 
+
 @app.route("/dequeue", methods=["POST"])
 def remove_first():
     return QUEUE.pop(0)
+
 
 @app.route("/init_driver", methods=["POST"])
 def init_driver(name, car_make, car_color, car_capacity):
@@ -111,6 +107,7 @@ def init_driver(name, car_make, car_color, car_capacity):
     DRIVERS.append(driver)
     return jsonify({"message": "Driver added."})
 
+
 @app.route("/change_driver_name", methods=["POST"])
 def change_driver_name(name, new_name):
     for driver in DRIVERS:
@@ -118,6 +115,7 @@ def change_driver_name(name, new_name):
             driver["driver_name"] = new_name
             return jsonify({"message": "Driver name changed."})
     return jsonify({"message": "Driver not found."})
+
 
 @app.route("/change_driver_make", methods=["POST"])
 def change_driver_make(name, new_make):
@@ -127,6 +125,7 @@ def change_driver_make(name, new_make):
             return jsonify({"message": "Driver make changed."})
     return jsonify({"message": "Driver not found."})
 
+
 @app.route("/change_driver_color", methods=["POST"])
 def change_driver_color(name, new_color):
     for driver in DRIVERS:
@@ -134,6 +133,7 @@ def change_driver_color(name, new_color):
             driver["car_color"] = new_color
             return jsonify({"message": "Driver color changed."})
     return jsonify({"message": "Driver not found."})
+
 
 @app.route("/change_driver_capacity", methods=["POST"])
 def change_driver_capacity(name, new_capacity):
@@ -143,3 +143,16 @@ def change_driver_capacity(name, new_capacity):
             return jsonify({"message": "Driver capacity changed."})
     return jsonify({"message": "Driver not found."})
 
+
+api_key = ""
+
+if __name__ == "__main__":
+    match (len(sys.argv)):
+        case 1:
+            app.run(debug=True)
+        case 2:
+            api_key = sys.argv[1]
+            print(f"API Key accepted: {sys.argv[1]}")
+            app.run(debug=True)
+        case default:
+            usage_error()
